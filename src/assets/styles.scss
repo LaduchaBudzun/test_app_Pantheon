@@ -1,0 +1,25 @@
+@import "./variables.scss";
+
+body {
+    background-color: $black;
+    font-family: 'Termina';
+    color: white;
+}
+
+@font-face {
+    font-family: 'Termina';
+    src: local('Termina'), local('Termina'),
+        url('~@/assets/fonts/termina/michroma.woff2') format('woff2'),
+        url('~@/assets/fonts/termina/michroma.woff') format('woff');
+    font-weight: 100;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Proxima_Nova';
+    src: local('Proxima_Nova'), local('Proxima_Nova'),
+        url('~@/assets/fonts/Proxima_Nova/Proxima_Nova.woff2') format('woff2'),
+        url('~@/assets/fonts/Proxima_Nova/Proxima_Nova.woff') format('woff');
+    font-weight: 100;
+    font-style: normal;
+}
