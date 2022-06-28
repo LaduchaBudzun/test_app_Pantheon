@@ -79,7 +79,7 @@ export default {
               document.body.clientHeight, document.documentElement.clientHeight
             );
 
-            if(scrollHeight - this.pageYOffset < 600){// конец всей страницы
+            if(scrollHeight - this.pageYOffset < 1200){// конец всей страницы
               this.showWarn()
             }
             return 
