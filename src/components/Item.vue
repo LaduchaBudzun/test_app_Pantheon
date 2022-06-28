@@ -1,25 +1,27 @@
 <template>
   <div class="item">
     <div class="img_container">
-      <img src="https://img.seadn.io/files/c9e06301b47a05fb9ed01024ba181519.png?h=512&w=512&auto=format" alt="" >
+      <img v-if="urlImg" :src="item.image" alt="" class="nft_img">
+      <img v-else src="@/assets/img/img_none.jpg" alt="" class="nft_img">
     </div>
     <div class="info">
       <div class="top_info">
         <div class="info-type">
           <div class="collection">
-            <span class="collection_name">TYLER</span>
+            <div class="collection_name">{{item.collectionName.toUpperCase()}}</div>
             <img src="@/assets/img/verified.svg" alt="">
           </div>
-          <div class="name-of-nft">Special form</div>
+          <div class="name-of-nft">{{item.name}}</div>
         </div>
         <div class="price_info">
           <button class="btn_buy-now">Buy now</button>
-          <div class="price">0.001 ETH</div>
+          <div v-if="item.price" class="price">{{item.price.toFixed(3)}} ETH</div>
+          <div v-else class="price">~ ETH</div>
         </div>
       </div>
       <div class="bottom_info">
         <div class="bottom_info-type">Utility type</div>
-        <div>Merchandise</div>
+        <div>{{item.utilityType}}</div>
       </div>
     </div>
   </div>
@@ -28,13 +30,49 @@
 <script>
 export default {
   name: 'Item',
+  props:{
+    item:Object
+  },
+  data(){
+    return {
+      urlImg:''
+    }
+  },
+  mounted (){
+    this.getImgbyURL(this.item.image)
+  },
+  methods: {
+      async getImgbyURL(url){
+        const response = await fetch(url)
+        if(response.status == 200){
+          this.urlImg = true
+        }else {
+          this.urlImg = false 
+        }
+        
+      },
+  }
 }
 </script>
 
 <style scoped lang="scss">
 @import "@/assets/variables.scss";
-
+.btn_buy-now {
+  cursor: pointer;
+}
+.nft_img {
+  max-height: 340px;
+  max-width: 350px;
+  width: 100%;
+}
+.name-of-nft {
+  max-width: 120px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 .item {
+  height: 580px;
   background-color: #ffffff;
   color: black;
   max-width: 380px;
@@ -59,6 +97,7 @@ export default {
   color: $orange;
 }
 .collection {
+  display: flex;
   img {
     position: relative;
     top: 2px;
@@ -68,6 +107,10 @@ export default {
     font-size: 10px;
     font-weight: 700;
     color: rgb(100, 100, 100);
+    max-width: 120px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 }
 

@@ -163,6 +163,8 @@ input {
   border-radius: inherit;
 
   position: absolute;
+  right: -1px;
+  top: -1px;
   transform: scale(0);
   transform-origin: center center;
 }
