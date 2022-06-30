@@ -14,7 +14,7 @@
           <div class="name-of-nft">{{item.name}}</div>
         </div>
         <div class="price_info">
-          <button class="btn_buy-now">Buy now</button>
+          <button class="btn_buy-now"><span>Buy now</span></button>
           <div v-if="item.price" class="price">{{item.price.toFixed(3)}} ETH</div>
           <div v-else class="price">~ ETH</div>
         </div>
@@ -57,8 +57,31 @@ export default {
 
 <style scoped lang="scss">
 @import "@/assets/variables.scss";
+.info-type {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  height: 40px;
+  justify-content: flex-end;
+}
+.price_info {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  height: 40px;
+  justify-content: flex-end;
+}
 .btn_buy-now {
   cursor: pointer;
+  width: 95px;
+  position: absolute;
+  top: -1px;
+  right: -16px;
+  outline: none;
+  span {
+    font-weight: 700;
+  }
 }
 .nft_img {
   max-height: 340px;
@@ -72,7 +95,7 @@ export default {
   text-overflow: ellipsis;
 }
 .item {
-  height: 580px;
+  height: 540px;
   background-color: #ffffff;
   color: black;
   max-width: 380px;
@@ -82,8 +105,11 @@ export default {
 }
 .info {
   margin-top: 20px;
+  font-weight: 900;
 }
 .img_container {
+  width: 345px;
+  height: 350px;
   padding: 20px;
   img {
     max-width: 100%;
@@ -98,10 +124,6 @@ export default {
 }
 .collection {
   display: flex;
-  img {
-    position: relative;
-    top: 2px;
-  }
   &_name {
     padding-right: 4px;
     font-size: 10px;

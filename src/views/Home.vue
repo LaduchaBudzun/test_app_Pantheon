@@ -1,27 +1,27 @@
 <template>
   <div class="home">
-    <div class="header_filter">
-      <Dropdown v-model="sorting" :options="filterOptions" />
-    </div>
+   <div class="header_filter-container">
+      <div class="header_filter">
+        <Dropdown v-model="sorting" :options="filterOptions" />
+      </div>
+   </div>
       
       <div class="home_content" >
         <div><Filter/></div>
         <div class="items" v-if="items.length > 0"> 
           <Items :items="items"/>
           <Button v-if="pageYOffset>1000" @click="scroolUp()" icon="pi pi-arrow-up" class="p-button-rounded p-button-warning btn-up" /> 
-          <div v-if="items.length == 0 || loadingNewItems" class="loading">
+          <div v-if="items.length == 0 || loadingNewItems && showWarn <= 0" class="loading">
             <ProgressSpinner/>
           </div>
-          <div v-if="items.length >= 110" class="end_items" >
+          <div class="end_items" >
             <Toast />
           </div>
         </div>
         <div v-else class="loading">
             <ProgressSpinner/>
         </div>
-        
-        
-        
+         
       </div>
    
   </div>
@@ -59,43 +59,34 @@ export default {
     window.removeEventListener('scroll', this.onScroll);
   },
   computed:{
-    ...mapGetters(['items','loadingNewItems'])
+    ...mapGetters(['items','loadingNewItems','showWarn'])
+  },
+  watch: {
+    showWarn(){
+      this.showWarnFunc()
+    }
   },
   methods:{
     ...mapMutations(['changeLoadingNewItems']),
     ...mapActions(['getItemsNFT']),
 
       onScroll(){
-        this.pageYOffset = window.pageYOffset // нахождение пользователя по Y
+        this.pageYOffset = window.pageYOffset // find user by Y
         const pageForGetItems = this.page 
-
-        if(Math.trunc(this.pageYOffset / 1500)  >= pageForGetItems + 1){//проверка на место нахождения пользователя
+        
+        if(Math.trunc(this.pageYOffset / 1500)  >= (pageForGetItems + 10) / 10){//checking for the user's location relative to the pages
             
-
-          if(this.page >= 10){// 10 последняя страница
-            const scrollHeight = Math.max(
-              document.body.scrollHeight, document.documentElement.scrollHeight,
-              document.body.offsetHeight, document.documentElement.offsetHeight,
-              document.body.clientHeight, document.documentElement.clientHeight
-            );
-
-            if(scrollHeight - this.pageYOffset < 1200){// конец всей страницы
-              this.showWarn()
-            }
-            return 
-          }
           this.changeLoadingNewItems(true)
           
-
-          if((pageForGetItems + 1) == (this.items.length / 10) ){// 
-              this.page = pageForGetItems + 1 
+          if((pageForGetItems + 10) == this.items.length || (pageForGetItems + 10) == this.items.length + 1){// 
+              this.page = pageForGetItems + 10
               this.getItemsNFT(this.page)
           }
           
         }      
   },
-  showWarn() {
-    this.$toast.add({severity:'warn', summary: 'Warn Message', detail:'All NFTs loaded', life: 4000});
+  showWarnFunc() {
+    this.$toast.add({severity:'warn', summary: 'Warn Message', detail:'All NFTs loaded', life: 30000});
   },
   scroolUp(){
     window.scrollTo(0,0)
@@ -105,6 +96,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 @import "@/assets/variables.scss";
+
 .loading {
   padding: 50px;
   width: 100%;
@@ -121,14 +113,20 @@ export default {
 }
 .items {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   flex-wrap: wrap;
   gap: 20px;
+  margin-left: 10px;
+}
+.header_filter-container {
+  display: flex;
+  justify-content: center;
+  max-width: 1348px;
+  margin: 0 auto;
 }
 .header_filter {
-  max-width: 1420px;
   width: 100%;
-  margin: 40px 40px;
+  margin: 40px 0 40px 0;
   display: flex;
   justify-content: flex-end;
   .p-dropdown {
@@ -142,11 +140,6 @@ export default {
   display: flex;
   margin: 0 auto;
   gap: 30px;
+  max-width: 1450px;
 }
-// .items {
-//   // position: absolute;
-//   top: 100px;
-//   right: 10px;
-//   max-width: 1200px;
-// }
 </style>

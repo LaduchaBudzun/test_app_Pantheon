@@ -3,8 +3,8 @@
       <div class="currency">
         <span>Currency</span>
         <div class="currency_switch">
-          <div class="eth" :class="{activeCurrency: filter.currency == 'eth'}" @click="changeFilter('currency' ,'eth')">ETH</div>
-          <div class="usd" :class="{activeCurrency: filter.currency == 'usd'}" @click="changeFilter('currency' ,'usd')">USD</div>
+          <div class="eth" :class="{activeCurrency: filter.currency == 'ETH'}" @click="changeFilter('currency' ,'ETH')">ETH</div>
+          <div class="usd" :class="{activeCurrency: filter.currency == 'USD'}" @click="changeFilter('currency' ,'USD')">USD</div>
         </div>
       </div>
       <Availability/>
@@ -12,12 +12,12 @@
         <span>Price range</span>
         <div class="price_range-inputs">
           <div class="price">
-            <span>Min</span>
-            <input type="number">
+            <input type="number" placeholder="Min">
+            <span>{{filter.currency}}</span>
           </div>
           <div class="price">
-            <span>Max</span>
-            <input type="number">
+            <input type="number" placeholder="Max">
+            <span>{{filter.currency}}</span>
           </div>
         </div>
       </div>
@@ -34,7 +34,7 @@ export default {
     data() {
     return{
       filter:{
-        currency:'usd',
+        currency:'ETH',
         sorting:''
       },
 
@@ -51,17 +51,21 @@ export default {
 <style lang="scss" scoped>
 @import "@/assets/variables.scss";
 .filter {
-  max-width: 270px;
+  width: 245px;
   border-radius: 10px;
   background: $black;
   position: sticky; /* Липкое позиционирование */
   left: 0;
   top: 100px;
+  margin-left: 30px;
   z-index: 2;
 }
 .price_range {
   margin-top: 50px;
-  max-width: 262px;
+  max-width: 245px;
+  span {
+    font-weight: 800;
+  }
 }
 .price_range-inputs {
   margin-top: 16px;
@@ -69,36 +73,60 @@ export default {
   display: flex;
   justify-content: space-between;
   div {
-    padding: 16px;
-    width: 45%;
+    height: 60px;
+    width: 48%;
     display: flex;
     border-radius: 10px;
     border: 1px solid white;
   }
   .price {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     span {
-      color: #ccc;
+      font-size: 14px;
+      margin-right: 10px;
     }
     input {
-      width: 40px;
-      height: 30px;
+      padding-left: 15px;
+      font-size: 16px;
+      width: 100%;
+      height: 80%;
       border: none;
       background-color: black;
       color: #fff;
+      outline: none;
+    }
+    input::placeholder {
+      font-size: 14px;
+      color: rgb(146, 146, 146);
+    }
+    input[type="number"] {
+      -moz-appearance: textfield;
+    }
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+      -webkit-appearance: none;
     }
   }
 }
 .currency {
   max-width: 245px;
+  font-weight: 800;
 }
 .currency_switch {
+  font-weight: 700;
   padding-top: 20px;
   max-width: 245px;
   width: 100%;
   display: flex;
   cursor: pointer;
   div {
-    padding: 17px 41px;
+    width: 50%;
+    padding: 17px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     transition: 0.4s;
   }
   .eth {
@@ -120,9 +148,5 @@ export default {
 .activeCurrency {
   background: $orange;
   border-color: $orange !important;
-}
-.availability {
-  margin-top: 65px;
-  max-width: 245px;
 }
 </style>

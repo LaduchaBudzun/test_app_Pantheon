@@ -11,6 +11,10 @@ actions:{
             }, 300)
             return
         }
+
+        if(result.result.length == 0 ){
+            commit('showWarn')
+        } 
         if(page != 0){
 
             commit('addItems',result.result)
@@ -31,15 +35,20 @@ mutations:{
     },
     changeLoadingNewItems(store,value){
         store.loadingNewItems = value
+    },
+    showWarn(store){
+        store.showWarn = store.showWarn + 1
     }
 },
 state:  {
     items:[],
-    loadingNewItems:false 
+    loadingNewItems:false,
+    showWarn:0
 
 },
 getters: {
     items: (store) => store.items,
-    loadingNewItems: (store) => store.loadingNewItems
+    loadingNewItems: (store) => store.loadingNewItems,
+    showWarn: (store) => store.showWarn
 }
 }

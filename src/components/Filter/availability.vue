@@ -6,14 +6,14 @@
         <section class="dark">
             <div class="all">
                 <label >
-                    <input type="radio" name="all" value>
+                    <input type="radio" name="availability">
                     <span class="design"></span>
                     <span class="text">All</span>
                 </label>
             </div>
             <div class="buy-now">
                 <label >
-                    <input type="radio" name="buy-now" >
+                    <input type="radio" name="availability" >
                     <span class="design"></span>
                     <span class="text">Buy now</span>
                 </label>
@@ -38,8 +38,11 @@ export default {
 
 <style lang='scss' scoped>
 .availability {
+  margin-top: 65px;
   max-width: 245px;
-  width: 100%;
+  span {
+    font-weight: 800;
+  }
 }
 .all {
   margin-top: 16px;
@@ -48,7 +51,6 @@ export default {
   margin-top: 12px;
 }
 .dark {
-  margin-left: 20px;
   div {
     padding: 17px;
     width: 100%;
@@ -106,7 +108,7 @@ section::after {
 }
 
 .dark {
-  --primary: hsl(1, 100%, 68%);
+  --primary: #eb5f33;
   --other: hsl(0, 0%, 90%);
 
   //   background: hsl(0, 0%, 10%);
@@ -142,8 +144,8 @@ input {
 
 /* .design */
 .design {
-  width: 20px;
-  height: 20px;
+  width: 30px;
+  height: 30px;
 
   border: 1px solid var(--other);
   border-radius: 100%;
